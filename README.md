@@ -1,7 +1,5 @@
 # grandMA3_lua_functions
-A library of grandMA3 in-built functions
-
-grandMA3 specific Lua functions, formatted for use with Visual Studio Code alongside the LuaLS language server.
+A library of grandMA3 specific Lua functions, formatted for use with Visual Studio Code & the LuaLS language server.
 
 *USAGE:* 
 **Simply place the "grandMA3_lua_functions.lua" file in your Visual Studio Code workspace, in a directory named "definitions".**
