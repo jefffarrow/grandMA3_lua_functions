@@ -9,7 +9,7 @@ grandMA3 specific Lua functions, formatted for use with Visual Studio Code along
 This library is derived from the grandMA3_lua_functions.txt file that is generated in the grandMA3 application by executing "LuaHelp" in the command line.
 
 
-OPEN ALPHA as there is no official API reference from MAlighting avaliable type declarations may be faulty or incomplete.
+OPEN ALPHA
 
 This project is not official or affilated with MA Lighting International GmbH
 
