@@ -4,12 +4,12 @@
 local lfs = {}
 
 
----@alias nothing nothing no feedback to MA system monitor
----@alias result result MA system monitor restult (Ok, Syntax Error, Illegal Command...)
----@alias handle handle MA UID
----@alias double double 64-bit floating-point number (C)
----@alias pCertificate pCertificate OverallDeviceCertificate
----@alias LuaInteger LuaInteger The integer that correlates to an object's handle
+---@alias nothing nothing # no feedback to MA system monitor
+---@alias result result # MA system monitor restult (Ok, Syntax Error, Illegal Command...)
+---@alias handle handle # MA UID
+---@alias double double # 64-bit floating-point number (C)
+---@alias pCertificate pCertificate # OverallDeviceCertificate
+---@alias LuaInteger LuaInteger # The integer that correlates to an object's handle
 
 --Object-Free API
 
@@ -26,20 +26,18 @@ function Printf(string) end
 function ErrPrintf(string) end
 
 
----@return result :command execution result (Ok, Syntax Error, Illegal Command...)
+---@return result # command execution result (Ok, Syntax Error, Illegal Command...)
 ---@param cmd_to_execute string
 function Cmd(cmd_to_execute) end
 
---string:cmd_to_execute [,undo [,target]]
 ---@return nothing
----@param cmd_to_execute string
+---@param cmd_to_execute string # cmd_to_execute [,undo [,target]]
 ---@param undo? handle
 ---@param target? handle
 function CmdIndirect(cmd_to_execute, undo, target) end
 
---string:cmd_to_execute [,undo [,target]]
 ---@return nothing
----@param cmd_to_execute string
+---@param cmd_to_execute string # cmd_to_execute [,undo [,target]]
 ---@param undo? handle
 ---@param target? handle
 function CmdIndirectWait(cmd_to_execute, undo, target) end
@@ -57,10 +55,10 @@ function HostSubType() end
 function SerialNumber() end
 
 
----@return pCertificate : OverallCertificate
+---@return pCertificate:OverallCertificate
 function OverallDeviceCertificate() end
 
----@return boolean: success
+---@return boolean # success
 ---@param ip string
 ---@param command string
 function RemoteCommand(ip, command) end
@@ -140,7 +138,7 @@ function CurrentExecPage() end
 ---@return handle
 function SelectedSequence() end
 
----@return handle:handle to page
+---@return handle # handle to page
 ---@param exec_number integer
 function GetExecutor(exec_number) end
 
@@ -152,97 +150,97 @@ function LoadExecConfig(exec_handle) end
 ---@param exec_handle handle
 function SaveExecConfig(exec_handle) end
 
----@return integer:first subfixture index
----@return integer:x
----@return integer:y
----@return integer:z
+---@return integer # first subfixture index
+---@return integer # x
+---@return integer # y
+---@return integer # z
 function SelectionFirst() end
 
----@return integer:next subfixture index
----@return integer:x
----@return integer:y
----@return integer:z
+---@return integer # next subfixture index
+---@return integer # x
+---@return integer # y
+---@return integer # z
 ---@param current_subfixture_index integer
 function SelectionNext(current_subfixture_index) end
 
----@return integer:amount of selected subfixtures
+---@return integer # amount of selected subfixtures
 function SelectionCount() end
 
----@return integer:min
----@return integer:max
----@return integer:index
----@return integer:block
----@return integer:group
+---@return integer # min
+---@return integer # max
+---@return integer # index
+---@return integer # block
+---@return integer # group
 function SelectionComponentX() end
 
----@return integer:min
----@return integer:max
----@return integer:index
----@return integer:block
----@return integer:group
+---@return integer # min
+---@return integer # max
+---@return integer # index
+---@return integer # block
+---@return integer # group
 function SelectionComponentY() end
 
----@return integer:min
----@return integer:max
----@return integer:index
----@return integer:block
----@return integer:group
+---@return integer # min
+---@return integer # max
+---@return integer # index
+---@return integer # block
+---@return integer # group
 function SelectionComponentZ() end
 
----@return integer:subfixture count
+---@return integer # subfixture count
 function GetSubfixtureCount() end
 
----@return handle|nil:reference to Subfixture object or nil
+---@return handle|nil # reference to Subfixture object or nil
 ---@param subfixture_index integer
 function GetSubfixture(subfixture_index) end
 
 
----@return integer:ui channel count
+---@return integer # ui channel count
 function GetUIChannelCount() end
 
 
----@return integer:rt channel count
+---@return integer # rt channel count
 function GetRTChannelCount() end
 
 
----@return integer:attribute count
+---@return integer # attribute count
 function GetAttributeCount() end
 
----@return table|nil : {array of UI channel indices or handles} or nil
----@param subfixture_index integer reference to Subfixture object[,boolean: as handles]
+---@return table|nil # {array of UI channel indices or handles} or nil
+---@param subfixture_index integer # reference to Subfixture object[,boolean # as handles]
 ---@param handles? boolean
 function GetUIChannels(subfixture_index, handles) end
 
----@return table|nil : {array of RT channel indices or handles} or nil
----@param fixture_index integer reference to Fixture object[,boolean: as handles]
+---@return table|nil # {array of RT channel indices or handles} or nil
+---@param fixture_index integer reference to Fixture object[,boolean # as handles]
 ---@param handles? boolean
 function GetRTChannels(fixture_index, handles) end
 
----@return table|nil : {ChannelUI descriptor} or nil
+---@return table|nil # {ChannelUI descriptor} or nil
 ---@param channel_UI_index integer
 function GetUIChannel(channel_UI_index) end
 
----@return table|nil : {ChannelRT descriptor} or nil
+---@return table|nil # {ChannelRT descriptor} or nil
 ---@param channel_RT_index integer
 function GetRTChannel(channel_RT_index) end
 
----@return handle|nil : reference to attribute or nil
+---@return handle|nil # reference to attribute or nil
 ---@param UI_channel_index integer
 function GetAttributeByUIChannel(UI_channel_index) end
 
 
----@return integer : attribute index
+---@return integer # attribute index
 ---@param attribute_name string
 function GetAttributeIndex(attribute_name) end
 
 
----@return integer : ui channel index
+---@return integer # ui channel index
 ---@param subfixture_index integer
 ---@param attribute_index integer
 function GetUIChannelIndex(subfixture_index, attribute_index) end
 
 
----@return integer : channel
+---@return integer # channel
 ---@param ui_channel_index integer
 ---@param attribute_index integer
 function GetChannelFunctionIndex(ui_channel_index, attribute_index) end
@@ -252,14 +250,14 @@ function GetChannelFunctionIndex(ui_channel_index, attribute_index) end
 ---@param attribute_index integer
 function GetChannelFunction(ui_channel_index, attribute_index) end
 
----@return handle : attribute handle
+---@return handle # attribute handle
 function GetSelectedAttribute() end
 
----@return string : fullName
+---@return string # fullName
 ---@param shortName string
 function GetTokenName(shortName) end
 
----@return string : fullName
+---@return string # fullName
 ---@param token_index integer
 function GetTokenNameByIndex(token_index) end
 
@@ -276,7 +274,7 @@ function GetTokenNameByIndex(token_index) end
 ---@return nothing
 ---@param uichannelindex number
 ---@param step number
----@param PhaserValueArray PhaserValueArray : {[cfindex:<val>][preset:lud][trans:<val>][width:<val>][accel:<val>][decel:<val>][rel:<val>][abs:<val>]}
+---@param PhaserValueArray PhaserValueArray # {[cfindex:<val>][preset:lud][trans:<val>][width:<val>][accel:<val>][decel:<val>][rel:<val>][abs:<val>]}
 function SetProgPhaserValue(uichannelindex, step, PhaserValueArray) end
 
 ---@class ProgPhaserArray
@@ -290,20 +288,20 @@ function SetProgPhaserValue(uichannelindex, step, PhaserValueArray) end
 
 ---@return nothing
 ---@param uichannelindex handle
----@param ProgPhaserArray ProgPhaserArray : {[fade:<val>][delay:<val>][speed:<Hz>][repeat:<val>][phase:<val>][preset:lud]{[cfindex:<val>][preset:lud][trans:<val>][width:<val>][accel:<val>][decel:<val>][rel:<val>][abs:<val>]}
+---@param ProgPhaserArray ProgPhaserArray # {[fade:<val>][delay:<val>][speed:<Hz>][repeat:<val>][phase:<val>][preset:lud]{[cfindex:<val>][preset:lud][trans:<val>][width:<val>][accel:<val>][decel:<val>][rel:<val>][abs:<val>]}}
 function SetProgPhaser(uichannelindex, ProgPhaserArray) end
 
----@return table : {fade:<val>,delay:<val>,speed:<Hz>,repeat:<val>,phase:<val>,preset:lud,{cfindex:<val>,preset:lud,trans:<val>,width:<val>,accel:<val>,decel:<val>,rel:<val>,abs:<val>}*}
+---@return table # {fade:<val>,delay:<val>,speed:<Hz>,repeat:<val>,phase:<val>,preset:lud,{cfindex:<val>,preset:lud,trans:<val>,width:<val>,accel:<val>,decel:<val>,rel:<val>,abs:<val>}*}
 ---@param uichannelindex number
 ---@param phaser_only boolean
 function GetProgPhaser(uichannelindex, phaser_only) end
 
----@return table : {cfindex:<val>,preset:lud,trans:<val>,width:<val>,accel:<val>,decel:<val>,rel:<val>,abs:<val>}
+---@return table # {cfindex:<val>,preset:lud,trans:<val>,width:<val>,accel:<val>,decel:<val>,rel:<val>,abs:<val>}
 ---@param uichannelindex number
 ---@param step number
 function GetProgPhaserValue(uichannelindex, step) end
 
----@return integer:flag
+---@return integer # flag
 ---@param colormodel string
 ---@param tripel1 double
 ---@param tripel2 double
@@ -313,20 +311,19 @@ function GetProgPhaserValue(uichannelindex, step) end
 ---@param const_Brightness boolean
 function SetColor(colormodel, tripel1, tripel2, tripel3, brightness, quality, const_Brightness) end
 
---handle(Preset)[,phasers_only(default: false)[,by_fixtures(default: false)]]
----@return table : array of phaser data
----@param preset handle
+---@return table # array of phaser data
+---@param preset handle # [,phasers_only(default: false)[,by_fixtures(default: false)]]
 ---@param phasers_only? boolean
 ---@param by_fixtures? boolean
 function GetPresetData(preset, phasers_only, by_fixtures) end
 
----@return integer : flag integer
+---@return integer # flag integer
 function ColMeasureDeviceDarkCalibrate() end
 
----@return table : table of values
+---@return table # table of values
 function ColMeasureDeviceDoMeasurement() end
 
----@return table : table of handle
+---@return table # table of handle
 ---@param address string
 function ObjectList(address) end
 
@@ -335,7 +332,7 @@ function ObjectList(address) end
 ---@param base_handle? handle
 function FromAddr(address, base_handle) end
 
----@return string : address
+---@return string # address
 ---@param handle handle
 function ToAddr(handle) end
 
@@ -348,11 +345,11 @@ function IntToHandle(LuaInteger) end
 function HandleToInt(handle) end
 
 ---@return handle
----@param stringH string : in H#... format
+---@param stringH string # in H#... format
 function StrToHandle(stringH) end
 
 ---@return string
----@param handle handle : in H#... format
+---@param handle handle # in H#... format
 function HandleToStr(handle) end
 
 ---@return true|nil
@@ -368,12 +365,12 @@ function Export(filename, export_data) end
 ---@param filename string
 function Import(filename) end
 
----@return boolean:success
+---@return boolean # success
 ---@param filename string
 ---@param export_data table
 function ExportJson(filename, export_data) end
 
----@return boolean:success
+---@return boolean # success
 ---@param filename string
 ---@param export_data table
 function ExportCSV(filename, export_data) end
@@ -389,27 +386,29 @@ function HookObjectChange(callback, handle, plugin_handle, target) end
 ---@param callback function
 function Unhook(callback) end
 
----@return integer : amount of removed hooks
----@param callback function : (can be nil)
----@param handle handle : (can be nil)
----@param context_handle handle : (can be nil)
+---@return integer # amount of removed hooks
+---@param callback function # (can be nil)
+---@param handle handle # (can be nil)
+---@param context_handle handle # (can be nil)
 function UnhookMultiple(callback, handle, context_handle) end
 
 ---@return nothing
 function DumpAllHooks() end
 
 ---@return string|integer
----@param path_type string|integer : path type as string | integer as path type from enum 'PathType' [,boolean: create]
-function GetPath(path_type) end
+---@param path_type string|integer # path type as string | integer as path type from enum 'PathType' [,boolean # create]
+---@param create? boolean
+function GetPath(path_type, create) end
 
----@return string : path type name
+---@return string # path type name
 ---@param target_object handle
----@param content_type? integer : (Enums.PathContentType)
+---@param content_type? integer # (Enums.PathContentType)
 function GetPathType(target_object, content_type) end
 
----@return string|integer : overriden path
----@param path_type string|integer : path type as string | integer as path type from enum 'PathType' [,boolean: create]
-function GetPathOverrideFor(path_type) end
+---@return string|integer # overriden path
+---@param path_type string|integer # path type as string | integer as path type from enum 'PathType' [,boolean # create]
+---@param create? boolean
+function GetPathOverrideFor(path_type, create) end
 
 function GetPathSeparator() end
 
@@ -424,7 +423,7 @@ function CreateDirectoryRecursive(path) end
 ---@return nothing
 function SyncFS() end
 
----@return table : {name:string, size:integer, time:integer}
+---@return table # {name, size, time}
 ---@param path string
 function DirList(path) end
 
@@ -494,19 +493,19 @@ function Mouse(displayIndex, type) end
 function Touch(displayIndex, type, touchId, absX, absY) end
 
 
----@return number : time
+---@return number # time
 function Time() end
 
 
----@return handle : mouse object handle
+---@return handle # mouse object handle
 function MouseObj() end
 
 
----@return handle : touch object handle
+---@return handle # touch object handle
 function TouchObj() end
 
 
----@return handle : keyboard object handle
+---@return handle # keyboard object handle
 function KeyboardObj() end
 
 ---@return nothing
@@ -517,34 +516,34 @@ function KeyboardObj() end
 ---@param context_object? handle
 function Timer(timer_name, delaytime, max_count, cleanup, context_object) end
 
----@return integer : absolute address
+---@return integer # absolute address
 ---@param patch handle
 ---@param starting_address integer
 ---@param footprint integer
 function FindBestDMXPatchAddr(patch, starting_address, footprint) end
 
----@return boolean : true - no collision, false - collisions
+---@return boolean # true - no collision, false - collisions
 ---@param dmx_mode handle
----@param dmx_address string : [,integer:count [,integer:breakIndex]]
+---@param dmx_address string # [,count [,breakIndex]]
 ---@param count? integer
 ---@param breakIndex? integer
 function CheckDMXCollision(dmx_mode, dmx_address, count, breakIndex) end
 
 ---@return boolean
----@param FID integer : [,integer:count [,integer:type]]
+---@param FID integer # [,count [,type]]
 ---@param count? integer
 ---@param type? integer
 function CheckFIDCollision(FID, count, type) end
 
 
----@return integer : dmx value
----@param address integer : [,integer:universe, boolean: modePercent]
+---@return integer # dmx value
+---@param address integer # [,universe,modePercent]
 ---@param universe? integer
 ---@param modePercent? boolean
 function GetDMXValue(address, universe, modePercent) end
 
----@return table : table of integer: dmx values
----@param universe integer : [,boolean: modePercent]
+---@return table # table of integer # dmx values
+---@param universe integer # [,modePercent]
 ---@param modePercent? boolean
 function GetDMXUniverse(universe, modePercent) end
 
@@ -553,21 +552,21 @@ function GetDMXUniverse(universe, modePercent) end
 ---@param led_values table
 function SetLED(usb_device_object_handle,led_values) end
 
----@return table:of boolean:state
+---@return table # of boolean:state
 ---@param usb_device_object_handle handle
 function GetButton(usb_device_object_handle) end
 
----@return handle: handle to undo
+---@return handle # handle to undo
 ---@param undo_text handle
 function CreateUndo(undo_text) end
 
  
----@return boolean : true if was closed, false - if it's still in use
+---@return boolean # true if was closed | false - if it's still in use
 ---@param handle_to_undo handle
 function CloseUndo(handle_to_undo) end
 
  
----@return boolean : true if desk is locked
+---@return boolean # true if desk is locked
 function DeskLocked() end
 
 ---@return nothing
@@ -586,30 +585,30 @@ function SelectionNotifyObject(object_to_notify_about) end
 ---@param associated_context handle
 function SelectionNotifyEnd(associated_context) end
 
----@return integer:amount of multi-patch fixtures created
+---@return integer # amount of multi-patch fixtures created
 ---@param array_of_fixture_handles table
 ---@param count integer
 ---@param undo_text? string
 function CreateMultiPatch(array_of_fixture_handles, count, undo_text) end
 
  
----@return handle : global variables
+---@return handle # global variables
 function GlobalVars() end
 
----@return handle : user variables
+---@return handle # user variables
 function UserVars() end
 
----@return handle : plugin variables
+---@return handle # plugin variables
 ---@param plugin_name string
 function PluginVars(plugin_name) end
 
  
----@return handle : addon variables
+---@return handle # addon variables
 ---@param addon_name string
 function AddonVars(addon_name) end
 
 
----@return boolean : success
+---@return boolean # success
 ---@param variables handle
 ---@param varname string
 ---@param value string
@@ -620,24 +619,21 @@ function SetVar(variables, varname, value) end
 ---@param varname string
 function GetVar(variables, varname) end
 
-
----@return boolean : success
+---@return boolean # success
 ---@param variables handle
 ---@param varname string
 function DelVar(variables, varname) end
 
- 
----@return table : api content
+---@return table # api content
 function GetApiDescriptor() end
 
- 
----@return table : api content
+---@return table # api content
 function GetObjApiDescriptor() end
 
----@return number:fps
+---@return number # fps
 function GetDebugFPS() end
 
----@return number:current value in percent
+---@return number # current value in percent
 ---@param type string
 ---|"'MEMORY'"
 ---|"'CPU'"
@@ -647,9 +643,9 @@ function GetDebugFPS() end
 ---|"'FANRPM'"
 function GetSample(type) end
 
--- AS ARRAY
----@return true|nil
----@param mode handle
+-- {handle to DMX mode, amount [,undo][,parent][,insert_index][,idtype][,cid][,fid][,name][,layer][,class][,patch:{array 1..8: string address}]}
+---@return true|nil # true on success or nil
+---@param handle_to_DMX_mode handle
 ---@param amount integer
 ---@param undo? string
 ---@param parent? handle
@@ -660,91 +656,88 @@ function GetSample(type) end
 ---@param name? string
 ---@param layer? string
 ---@param class? string
----@param patch? table : {array 1..8: string address}
-function AddFixtures(mode, amount, undo, parent, insert_index, idtype, cid, fid, name, layer, class, patch) end
+---@param patch? table # {array 1..8: string address}
+function AddFixtures(handle_to_DMX_mode, amount, undo, parent, insert_index, idtype, cid, fid, name, layer, class, patch) end
 
--- NESTED
--- [string:title [, string:value [, integer:x [, integer:y]]]]
----@return string:value
----@param title string
----@param value string
----@param x integer
----@param y integer
+-- The TextInput Lua function opens a text input pop-up and returns the typed input as a string. It is part of the user interface functions.
+---@return string # The returned user input.
+---@param title? string # [title [, value [, # x [, # y]]]]
+---@param value? string
+---@param x? integer
+---@param y? integer
 function TextInput(title, value, x, y) end
 
--- AS ARRAY
----@return string:value
+-- The PopupInput Lua function creates a popup input field in the UI, where the user can select an item out of a list of different variables.
+---@return string # value
 ---@param title string
 ---@param caller handle
----@param items table:{{'str'|'integer'|'lua'|'handle', name, type-dependent}...}
+---@param items table # {{'str'|'integer'|'lua'|'handle', name, type-dependent}...}
 ---@param selectedValue string
 ---@param x integer
 ---@param y integer
 ---@param target handle
----@param render_options table:{left_icon,number,right_icon}
+---@param render_options table # {left_icon,number,right_icon}
 ---@param useTopLeft boolean
----@param properties table:{prop:value}
----@param add_args table:{FilterSupport='Yes'/'No'}
+---@param properties table # {prop:value}
+---@param add_args table # {FilterSupport='Yes'/'No'}
 function PopupInput(title, caller, items, selectedValue, x, y, target, render_options, useTopLeft, properties, add_args) end
 
--- NESTED
--- [string:title [,string:message [,integer:displayIndex [,boolean:showCancel]]]]
----@return boolean:result
----@param title string
----@param message string
----@param displayIndex integer
----@param showCancel boolean
+
+---@return boolean # result
+---@param title string # [title [,message [,# displayIndex [,showCancel]]]]
+---@param message? string
+---@param displayIndex? integer
+---@param showCancel? boolean
 function Confirm(title, message, displayIndex, showCancel) end
 
----@return handle : display_handle
+---@return handle # display_handle
 ---@param display_index integer
 function GetDisplayByIndex(display_index) end
 
----@return integer : wingID
----@return boolean : isExtension
+---@return integer # wingID
+---@return boolean # isExtension
 function GetRemoteVideoInfo() end
 
----@return handle|nil : handle to UI object or nil
+---@return handle|nil # handle to UI object or nil
 ---@param display_index integer
----@param position table : {x,y}:position
+---@param position table # {x,y}:position
 function GetUIObjectAtPosition(display_index, position) end
 
----@return true|nil : true on success, nil on timeout
+---@return true|nil # true on success, nil on timeout
 ---@param handle_to_UIObject handle
 ---@param seconds_to_wait? number
 function WaitObjectDelete(handle_to_UIObject, seconds_to_wait) end
 
----@return handle : display_handle
+---@return handle # display_handle
 function GetFocus() end
 
----@return handle : display_handle
+---@return handle # display_handle
 function GetFocusDisplay() end
 
----@return handle : handle to DisplayCollect
+---@return handle # handle to DisplayCollect
 function GetDisplayCollect() end
 
 ---@return nothing
 ---@param handle handle
 function FindBestFocus(handle) end
 
--- NESTED
--- [boolean:backwards(false)[,integer(Focus::Reason), returnreason(UserTabKey)]]
 ---@return nothing
----@param backwards boolean
----@param reason? integer : [,integer(Focus::Reason), returnreason(UserTabKey)]]
-function FindNextFocus(backwards, reason) end
+---@param backwards boolean # [boolean:backwards(false)[,integer(Focus::Reason), returnreason(UserTabKey)]]
+---@param reason? integer
+---@param returnreason? any
+function FindNextFocus(backwards, reason, returnreason) end
 
 ---@return nothing
 function CloseAllOverlays() end
 
----@return handle : handle to top modal overlay
+---@return handle # handle to top modal overlay
 function GetTopModal() end
 
----@return handle : handle to top overlay on the display
+---@return handle # handle to top overlay on the display
 ---@param display_index integer
 function GetTopOverlay(display_index) end
 
----@return handle|nil : handle to modal overlay or nil on failure(timeout)
+---@return handle|nil # handle to modal overlay or nil on failure(timeout)
 ---@param seconds_to_wait number
 function WaitModal(seconds_to_wait) end
 
@@ -757,8 +750,8 @@ function SetBlockInput(block) end
 function FindTexture(texture_name) end
 
 -- AS ARRAY
--- {title:string,[ backColor:string,][,timeout:number (ms)][,timeoutResultCancel:boolean][,timeoutResultID:number][ icon:string,][ titleTextColor:string,][ messageTextColor:string,] message:string[, display:(integer|lightuserdata)], commands:{array of {value:integer, name:string}}, inputs:{array of {name:string, value:string, blackFilter:string, whiteFilter:string, vkPlugin:string, maxTextLength:integer}}, states:{array of {name:string, state:boolean[,group:integer]}, selectors:{array of {name:string, selectedValue:integer, values:table[,type:integer 0-swipe, 1-radio]} }
----@return boolean : {success:boolean, result:integer, inputs:{array of [name:string] = value:string}, states:{array of [name:string] = state:boolean}, selectors:{array of [name:string] = selected-value:integer}}
+-- {title:string,[ backColor,][,timeout (ms)][,timeoutResultCancel][,timeoutResultID][ icon,][ titleTextColor,][ messageTextColor,] message[, display:(integer|lightuserdata)], commands:{array of {value, name}}, inputs:{array of {name, value, blackFilter, whiteFilter, vkPlugin, maxTextLength}}, states:{array of {name, state[,group]}, selectors:{array of {name, selectedValue, values:table[,type:integer 0-swipe, 1-radio]} }
+---@return boolean # {success:boolean, result:integer, inputs:{array of [name:string] = value:string}, states:{array of [name:string] = state:boolean}, selectors:{array of [name:string] = selected-value:integer}}
 ---@param title string
 ---@param message string
 ---@param commands table
@@ -777,14 +770,14 @@ function ToAddr(handle) end
 ---@param handle handle
 function Dump(handle) end
 
----@return string:numeric root address
----@param handle handle : [,handle:base_handle [,boolean:force parent-based address]]
+---@return string # numeric root address
+---@param handle handle # [,base_handle [,force parent-based address]]
 ---@param base_handle? handle
 ---@param force? boolean
 function Addr(handle, base_handle, force) end
 
----@return string:text:numeric root address
----@param handle handle : [,handle:base_handle [,boolean:force parent-based address]]
+---@return string # text:numeric root address
+---@param handle handle # [,base_handle [,force parent-based address]]
 ---@param base_handle? handle
 ---@param escape_names? boolean
 function AddrNative(handle, base_handle, escape_names) end
@@ -816,46 +809,41 @@ function Compare(handle1, handle2) end
 ---@param size number
 function Resize(handle, size) end
 
---handle, number:index(1-based)
----@return handle:child_handle
+---@return handle # child_handle
 ---@param handle handle
----@param index number
+---@param index number # (1-based)
 function Ptr(handle, index) end
 
---handle, number:index(1-based)
----@return handle:child_handle
+---@return handle # child_handle
 ---@param handle handle
----@param index number
+---@param index number # (1-based)
 function CmdlinePtr(handle, index) end
 
---table of handle:child_handles
----@return table
+---@return table # table of child_handles
 ---@param handle handle
 function Children(handle) end
 
----@return handle:current child or nil
+---@return handle # current child or nil
 function CurrentChild(handle) end
 
---handle, number:child_index(1-based) [,string:class[,handle:undo]]
----@return handle:child_handle
+
+---@return handle # child_handle
 ---@param handle handle
----@param child_index number
----@param class? string : nested
+---@param child_index number # (1-based) [,class [,undo[,count]]]
+---@param class? string
 ---@param undo? handle
 function Create(handle, child_index, class, undo) end
 
---handle [,string:class [,handle:undo[,integer:count]]]
----@return handle:child_handle
----@param handle handle
----@param class? string : nested
+---@return handle # child_handle
+---@param handle handle # (1-based) [,class [,undo[,count]]]
+---@param class? string
 ---@param undo? handle
 ---@param count? integer
 function Append(handle, class, undo, count) end
 
---handle [,string:class [,handle:undo]]
----@return handle:child_handle
----@param handle handle
----@param class? string : nested
+---@return handle # child_handle
+---@param handle handle # [,class [,undo]]
+---@param class? string 
 ---@param undo? handle
 function Aquire(handle, class, undo) end
 
@@ -865,11 +853,10 @@ function Aquire(handle, class, undo) end
 ---@param undo? handle
 function Delete(handle, child_index, undo) end
 
---handle, number:child_index(1-based) [,string:class [,handle:undo[,integer:count]]]
----@return handle:child_handle
+---@return handle # child_handle
 ---@param handle handle
----@param child_index number
----@param class? string : nested
+---@param child_index number # (1-based) [,class [,undo[,count]]]
+---@param class? string 
 ---@param undo? handle
 ---@param count? integer
 function Insert(handle, child_index, class, undo, count) end
@@ -894,43 +881,43 @@ function HasParent(dst_handle, src_handle, undo) end
 
 ---@return nothing
 ---@param handle handle
----@param change string : change level enum name
+---@param change string # change level enum name
 function Changed(handle, change) end
 
 
----@return boolean : returns true if objects is considered 'empty'
+---@return boolean # returns true if objects is considered 'empty'
 function IsEmpty(handle) end
 
 ---@return nothing
 ---@param property_name string
 ---@param property_value string
----@param override? number : [,Enums.ChangeLevel:override change level]
+---@param override? number # [,Enums.ChangeLevel:override change level]
 function Set(handle, property_name, property_value, override) end
 
 ---@return nothing
 ---@param handle_of_parent handle
 ---@param property_name string
 ---@param property_value string
----@param recursive? boolean : (default: false)
+---@param recursive? boolean # (default: false)
 function SetChildren(handle_of_parent, property_name, property_value, recursive) end
 
----@return string : property_value (if 'role' provided - always string)
+---@return string # property_value (if 'role' provided - always string)
 ---@param handle handle
 ---@param property_name string
----@param roles? table : [,enum{Roles}:role]
+---@param roles? table # [,enum{Roles}:role]
 function Get(handle, property_name, roles) end
 
 
----@return number : property_count
+---@return number # property_count
 function PropertyCount(handle) end
 
 
----@return string : property_name
+---@return string # property_name
 ---@param handle handle
 ---@param property_index number
 function PropertyName(handle, property_index) end
 
----@return string : property_type
+---@return string # property_type
 ---@param handle handle
 ---@param property_index number
 function PropertyType(handle, property_index) end
@@ -985,13 +972,13 @@ function FindRecursive(search_start_handle, search_name, search_class_name) end
 ---@param search_name string
 function FindWild(search_start_handle, search_name) end
 
----@return boolean:success
+---@return boolean # success
 ---@param handle handle
 ---@param file_path string
 ---@param file_name string
 function Import(handle, file_path, file_name) end
 
----@return boolean:success
+---@return boolean # success
 ---@param handle handle
 ---@param file_path string
 ---@param file_name string
@@ -1004,13 +991,13 @@ function Export(handle, file_path, file_name) end
 function GetExportFileName(handle, camel_case_to_file_name) end
 
 
----@return boolean:success
+---@return boolean # success
 ---@param handle handle
 ---@param file_path string
 ---@param file_name string
 function Load(handle, file_path, file_name) end
 
----@return boolean:success
+---@return boolean # success
 ---@param handle handle
 ---@param file_path string
 ---@param file_name string
@@ -1019,7 +1006,7 @@ function Save(handle, file_path, file_name) end
 ---@return nothing
 ---@param handle handle
 ---@param dest_handle handle
----@param focusSearchAllowed boolean : (default:true)
+---@param focusSearchAllowed boolean # (default:true)
 function CommandCall(handle, dest_handle, focusSearchAllowed) end
 
 ---@return nothing
@@ -1036,17 +1023,17 @@ function CommandCreateDefaults(handle) end
 
 ---@return nothing
 ---@param handle handle
----@param fader table : {[double:value[0..100]], [boolean:faderDisabled], [string:token(Fader*)]}
+---@param fader table # {[double:value[0..100]], [boolean:faderDisabled], [string:token(Fader*)]}
 function SetFader(handle, fader) end
 
----@return double : value[0..100]
+---@return double # value[0..100]
 ---@param handle handle
----@param fader table : {[string:token(Fader*)], [integer:index]}
+---@param fader table # {[string:token(Fader*)], [integer # index]}
 function GetFader(handle, fader) end
 
 ---@return string:text
 ---@param handle handle
----@param fader table : {[string:token(Fader*)], [integer:index]}
+---@param fader table # {[string:token(Fader*)], [integer # index]}
 function GetFaderText(handle, fader) end
 
 ---@return boolean:result
@@ -1079,7 +1066,7 @@ function InputRun(handle) end
 ---@return result:<depends on function>
 ---@param handle handle
 ---@param function_name string
----@param args? string : [,...parameters to function...]
+---@param args? string # [,...parameters to function...]
 function InputCallFunction(handle, function_name, args) end
 
 ---@return true|nil
@@ -1096,7 +1083,7 @@ function InputSetMaxLength(handle, length) end
 ---@param handle handle
 ---@param name string
 ---@param value string
----@param appearance? table : [,{[left={...}][right={...}]}:appearance]
+---@param appearance? table # [,{[left={...}][right={...}]}:appearance]
 function AddListStringItem(handle,name,value, appearance) end
 
 ---@return nothing
@@ -1104,14 +1091,14 @@ function AddListStringItem(handle,name,value, appearance) end
 ---@param name string
 ---@param value string
 ---@param target_handle handle
----@param appearance? table : [,{[left={...}][right={...}]}:appearance]
+---@param appearance? table # [,{[left={...}][right={...}]}:appearance]
 function AddListPropertyItem(handle,name,value,target_handle, appearance) end
 
 ---@return nothing
 ---@param handle handle
 ---@param name string
 ---@param value string
----@param appearance? table : [,{[left={...}][right={...}]}:appearance]
+---@param appearance? table # [,{[left={...}][right={...}]}:appearance]
 function AddListNumericItem(handle,name,value, appearance) end
 
 ---@return nothing
@@ -1119,56 +1106,56 @@ function AddListNumericItem(handle,name,value, appearance) end
 ---@param name string
 ---@param value string
 ---@param callback function
----@param appearance? table : [,{[left={...}][right={...}]}:appearance]
+---@param appearance? table # [,{[left={...}][right={...}]}:appearance]
 function AddListLuaItem(handle,name,value,callback, appearance) end
 
 -- OR & NESTED
--- handle,handle:target object[,(string: explicit_name[,{[left={...}][right={...}]}:appearance] | enum{Roles}: role [,:boolean: extended_name[,{[left={...}][right={...}]}:appearance]])]
+-- handle,handle:target object[,(string: explicit_name[,{[left={...}][right={...}]}:appearance] | enum{Roles}: role [,:boolean # extended_name[,{[left={...}][right={...}]}:appearance]])]
 ---@return nothing
 ---@param handle handle
 ---@param target_object handle
 ---@param explicit_name? string
----@param role? number : enums
+---@param role? number # enums
 ---@param extended_name? boolean
----@param appearance? table : [,{[left={...}][right={...}]}:appearance]
+---@param appearance? table # [,{[left={...}][right={...}]}:appearance]
 function AddListObjectItem(handle,target_object, explicit_name, appearance, role, extended_name, appearance) end
 
 ---@return nothing
 ---@param handle handle
----@param string_items table : {item={[1]=name,[2]=value},...}
+---@param string_items table # {item={[1]=name,[2]=value},...}
 function AddListStringItems(handle, string_items) end
 
 ---@return nothing
 ---@param handle handle
----@param property_items table : {item={[1]=name,[2]=property name,[3]=target handle},...}
+---@param property_items table # {item={[1]=name,[2]=property name,[3]=target handle},...}
 function AddListPropertyItems(handle, property_items) end
 
 ---@return nothing
 ---@param handle handle
----@param numeric_items table : {item={[1]=name,[2]=integer:value},...}
+---@param numeric_items table # {item={[1]=name,[2]=integer # value},...}
 function AddListNumericItems(handle, numeric_items) end
 
 ---@return nothing
 ---@param handle handle
----@param lua_items table : {item={[1]=name,[2]=value/function name,[3]=callback reference[,[4]=argument of any lua type to pass to callback]},...}
+---@param lua_items table # {item={[1]=name,[2]=value/function name,[3]=callback reference[,[4]=argument of any lua type to pass to callback]},...}
 function AddListLuaItems(handle, lua_items) end
 
 ---@return nothing
 ---@param handle handle
 ---@param parent handle
----@param role? number : [,enum{Roles}:role]
+---@param role? number # [,enum{Roles}:role]
 function AddListChildren(handle, parent, role) end
 
 ---@return nothing
 ---@param handle handle
 ---@param parent handle
----@param role? number : [,enum{Roles}:role]
+---@param role? number # [,enum{Roles}:role]
 function AddListChildrenNames(handle, parent, role) end
 
 ---@return nothing
 ---@param handle handle
 ---@param parent handle
----@param role? number : [,enum{Roles}:role]
+---@param role? number # [,enum{Roles}:role]
 function AddListRecursiveNames(handle, parent, role) end
 
 ---@return nothing
@@ -1189,10 +1176,9 @@ function SelectListItemByName(handle,name_value) end
 ---@param value string
 function SelectListItemByValue(handle,value) end
 
---handle,integer:index(1-based)
 ---@return nothing
 ---@param handle handle
----@param index integer
+---@param index integer # (1-based)
 function SelectListItemByIndex(handle,index) end
 
 ---@return nothing
@@ -1203,7 +1189,7 @@ function IsListItemEnabled(handle,index) end
 ---@return nothing
 ---@param handle handle
 ---@param index integer
----@param empty? boolean : (default:true)
+---@param empty? boolean # (default:true)
 function SetEnabledListItem(handle,index, empty) end
 
 ---@return nothing
@@ -1214,11 +1200,11 @@ function IsListItemEmpty(handle,index) end
 ---@return nothing
 ---@param handle handle
 ---@param index integer
----@param empty? boolean : (default:true)
+---@param empty? boolean # (default:true)
 function SetEmptyListItem(handle,index, empty) end
 
 
----@return string : value
+---@return string # value
 ---@param handle handle
 ---@param index integer
 function GetListItemValueStr(handle,index) end
@@ -1230,12 +1216,12 @@ function GetListItemValueStr(handle,index) end
 function SetListItemValueStr(handle,index,value) end
 
 
----@return integer : value
+---@return integer # value
 ---@param handle handle
 ---@param index integer
 function GetListItemValueI64(handle,index) end
 
----@return string : name
+---@return string # name
 ---@param handle handle
 ---@param index integer
 function GetListItemName(handle,index) end
@@ -1246,7 +1232,7 @@ function GetListItemName(handle,index) end
 ---@param name string
 function SetListItemName(handle,index,name) end
 
----@return table : {left={AppearanceData}, right={AppearanceData}}
+---@return table # {left={AppearanceData}, right={AppearanceData}}
 ---@param handle handle
 ---@param index integer
 function GetListItemAppearance(handle,index) end
@@ -1257,156 +1243,156 @@ function GetListItemAppearance(handle,index) end
 function SetListItemAppearance(handle,index) end
 
 
----@return handle|nil : button or nil if not visible
+---@return handle|nil # button or nil if not visible
 ---@param handle handle
 ---@param index integer
 function GetListItemButton(handle,index) end
 
 
----@return integer : 1-based index
+---@return integer # 1-based index
 function GetListSelectedItemIndex(handle) end
 
 
----@return integer : amount of items in the list
+---@return integer # amount of items in the list
 function GetListItemsCount(handle) end
 
 
----@return integer : 1-based index
+---@return integer # 1-based index
 ---@param handle handle
 ---@param value string
 function FindListItemByValueStr(handle,value) end
 
----@return integer : 1-based index
+---@return integer # 1-based index
 ---@param handle handle
 ---@param value string
 function FindListItemByName(handle,value) end
 
----@return handle : handle to GridBase
+---@return handle # handle to GridBase
 function GridGetBase(handle_to_UIGrid) end
 
----@return handle : handle to GridData
+---@return handle # handle to GridData
 function GridGetData(handle_to_UIGrid) end
 
----@return handle : handle to GridSelection
+---@return handle # handle to GridSelection
 function GridGetSelection(handle_to_UIGrid) end
 
----@return table : {r,c, r_UniqueId,r_GroupId,c_UniqueId,c_GroupId} cells in the selection
+---@return table # {r,c, r_UniqueId,r_GroupId,c_UniqueId,c_GroupId} cells in the selection
 function GridGetSelectedCells(handle_to_UIGrid) end
 
----@return handle : handle to GridSettings
+---@return handle # handle to GridSettings
 function GridGetSettings(handle_to_UIGrid) end
 
----@return table : {r,c}
+---@return table # {r,c}
 function GridGetDimensions(handle_to_UIGrid) end
 
----@return table : {v = {index,offset}, h={index,offset}}
+---@return table # {v = {index,offset}, h={index,offset}}
 function GridGetScrollOffset(handle_to_UIGrid) end
 
 ---@return nothing
 ---@param handle_to_UIGrid handle
 ---@param columnId integer
----@param size integer:size in pixels
+---@param size integer # size in pixels
 function GridSetColumnSize(handle_to_UIGrid, columnId, size) end
 
----@return table : {r,c}
+---@return table # {r,c}
 function GridGetScrollCell(handle_to_UIGrid) end
 
----@return table : {text, color={text,back}}
+---@return table # {text, color={text,back}}
 ---@param handle_to_UIGrid handle
----@param cell table : {r,c}:cell
+---@param cell table # {r,c}:cell
 function GridGetCellData(handle_to_UIGrid, cell) end
 
 ---@return boolean
 ---@param handle_to_UIGrid handle
----@param cell table  : {r,c}:cell
+---@param cell table # {r,c}:cell
 function GridIsCellVisible(handle_to_UIGrid, cell) end
 
 ---@return boolean
 ---@param handle_to_UIGrid handle
----@param cell table  : {r,c}:cell
+---@param cell table # {r,c}:cell
 function GridCellExists(handle_to_UIGrid, cell) end
 
 ---@return boolean
 ---@param handle_to_UIGrid handle
----@param cell table  : {r,c}:cell
+---@param cell table # {r,c}:cell
 function GridIsCellReadOnly(handle_to_UIGrid, cell) end
 
 ---@return nothing
 ---@param handle_to_UIGrid handle
----@param cell table  : {r,c}:cell
+---@param cell table # {r,c}:cell
 function GridScrollCellIntoView(handle_to_UIGrid, cell) end
 
 ---@return table
 ---@param handle_to_UIGrid handle
----@param cell table  : {r,c}:cell
+---@param cell table # {r,c}:cell
 function GridGetCellDimensions(handle_to_UIGrid, cell) end
 
----@return integer|nil : parent row id (integer) or nil (if there's no parent)
+---@return integer|nil # parent row id (integer) or nil (if there's no parent)
 ---@param handle_to_UIGrid handle
 ---@param rowId integer
 function GridGetParentRowId(handle_to_UIGrid, rowId) end
 
----@return table|nil : {r,c} or nil
+---@return table|nil # {r,c} or nil
 function GridsGetExpandHeaderCell(handle_to_UIGrid) end
 
----@return table|nil : width in pixels or nil
+---@return table|nil # width in pixels or nil
 ---@param handle_to_UIGrid handle
 ---@param cell table
 function GridsGetLevelButtonWidth(handle_to_UIGrid, cell) end
 
 
----@return handle : overlay_handle
+---@return handle # overlay_handle
 function GetOverlay(handle_to_UIObject) end
 
 
----@return handle : display_handle
+---@return handle # display_handle
 function GetDisplay(handle_to_UIObject) end
 
 
----@return integer : display_index
+---@return integer # display_index
 function GetDisplayIndex(handle_to_UIObject) end
 
 ---@return handle
 function GetScreen(handle_to_UIObject) end
 
 
----@return integer : count
+---@return integer # count
 function GetUIChildrenCount(handle_to_UIObject) end
 
 ---@return nothing
 function ClearUIChildren(handle_to_UIObject) end
 
----@return handle:handle_to_UIObject
+---@return handle # handle_to_UIObject
 ---@param handle_to_UIObject handle
----@param index integer:index(1-based)
+---@param index integer # index(1-based)
 function GetUIChild(handle_to_UIObject, index) end
 
----@return table : of references to children of passed UIObject
+---@return table # of references to children of passed UIObject
 function UIChildren(handle_to_UIObject) end
 
----@return true|nil : true on success, nil on timeout or if object doesn't exist
----@param handle_to_UIObject handle : [, number:seconds_to_wait[, boolean: force_to_re-init, default - false]]
+---@return true|nil # true on success, nil on timeout or if object doesn't exist
+---@param handle_to_UIObject handle # [, seconds_to_wait[, force_to_re-init (default - false)]]
 ---@param seconds_to_wait? number
----@param force_to_re? boolean : default - false
+---@param force_to_re? boolean # default - false
 function WaitInit(handle_to_UIObject, seconds_to_wait, force_to_re) end
 
----@return true|nil : true on success, nil on timeout or if object doesn't exist
+---@return true|nil # true on success, nil on timeout or if object doesn't exist
 ---@param handle_to_UIObject handle
 ---@param expected_amount_of_children integer
 ---@param seconds_to_wait? number
 function WaitChildren(handle_to_UIObject, expected_amount_of_children, seconds_to_wait) end
 
----@return boolean : true on success, nil on failure
+---@return boolean # true on success, nil on failure
 ---@param handle_to_UIObject handle
 ---@param callback_to_invoke_on_deletion function
 ---@param args? any
 function HookDelete(handle_to_UIObject, callback_to_invoke_on_deletion, args) end
 
 
----@return boolean: is visible
+---@return boolean # is visible
 function IsVisible(handle_to_UIObject) end
 
----@return boolean: is enabled
+---@return boolean # is enabled
 function IsEnabled(handle_to_UIObject) end
 
 ---@return nothing
@@ -1420,69 +1406,69 @@ function ShowModal(handle, callback) end
 ---@param y integer
 function SetPositionHint(handle,x,y) end
 
----@return boolean : true if scroll of the requested type is needed
+---@return boolean # true if scroll of the requested type is needed
 ---@param handle handle
----@param scroll_type integer : scroll_type (see 'ScrollType' enum)
+---@param scroll_type integer # scroll_type (see 'ScrollType' enum)
 function ScrollIsNeeded(handle,scroll_type) end
 
----@return boolean : true scroll
+---@return boolean # true scroll
 ---@param handle handle
----@param scroll_type integer : scroll_type (see 'ScrollType' enum)
----@param scroll_entity integer : scroll_entity (item or area, see 'ScrollParamEntity' enum)
----@param value_type integer : value type (absolute or relative, see 'ScrollParamValueType' enum)
----@param value_to_scroll number : (items - 1-based)
+---@param scroll_type integer # scroll_type (see 'ScrollType' enum)
+---@param scroll_entity integer # scroll_entity (item or area, see 'ScrollParamEntity' enum)
+---@param value_type integer # value type (absolute or relative, see 'ScrollParamValueType' enum)
+---@param value_to_scroll number # (items - 1-based)
 ---@param updateOpposite_side boolean
 function ScrollDo(handle,scroll_type,scroll_entity,value_type,value_to_scroll,updateOpposite_side) end
 
----@return table|nil:{index(1-based), offset, visibleArea, totalArea, itemsCount, itemsOnPage} or nil
+---@return table|nil # {index(1-based), offset, visibleArea, totalArea, itemsCount, itemsOnPage} or nil
 ---@param handle handle
 ---@param scroll_type integer
 function ScrollGetInfo(handle,scroll_type) end
 
----@return integer|nil : size of the item of nil
+---@return integer|nil # size of the item of nil
 ---@param handle handle
----@param scroll_type integer : scroll_type (see 'ScrollType' enum)
----@param item_idx integer : 1-based item_idx
+---@param scroll_type integer # scroll_type (see 'ScrollType' enum)
+---@param item_idx integer # 1-based item_idx
 function ScrollGetItemSize(handle,scroll_type,item_idx) end
 
----@return integer|nil : offset of the item or nil
+---@return integer|nil # offset of the item or nil
 ---@param handle handle
----@param scroll_type integer : scroll_type (see 'ScrollType' enum)
----@param item_idx integer : 1-based item_idx
+---@param scroll_type integer # scroll_type (see 'ScrollType' enum)
+---@param item_idx integer # 1-based item_idx
 function ScrollGetItemOffset(handle,scroll_type,item_idx) end
 
----@return integer : 1-based item_idx
+---@return integer # 1-based item_idx
 ---@param handle handle
----@param scroll_type integer : scroll_type (see 'ScrollType' enum)
----@param offset integer : 1-based item_idx
+---@param scroll_type integer # scroll_type (see 'ScrollType' enum)
+---@param offset integer # 1-based item_idx
 function ScrollGetItemByOffset(handle,scroll_type,offset) end
 
----@return integer:size
+---@return integer # size
 ---@param handle_to_UILayoutGrid handle
 ---@param idx integer
 function UILGGetColumnWidth(handle_to_UILayoutGrid, idx) end
 
----@return integer:size
+---@return integer # size
 ---@param handle_to_UILayoutGrid handle
 ---@param idx integer
 function UILGGetRowHeight(handle_to_UILayoutGrid, idx) end
 
----@return integer:x
+---@return integer # x
 ---@param handle_to_UILayoutGrid handle
 ---@param idx integer
 function UILGGetColumnAbsXLeft(handle_to_UILayoutGrid, idx) end
 
----@return integer:x
+---@return integer # x
 ---@param handle_to_UILayoutGrid handle
 ---@param idx integer
 function UILGGetColumnAbsXRight(handle_to_UILayoutGrid, idx) end
 
----@return integer:y
+---@return integer # y
 ---@param handle_to_UILayoutGrid handle
 ---@param idx integer
 function UILGGetRowAbsYTop(handle_to_UILayoutGrid, idx) end
 
----@return integer:y
+---@return integer # y
 ---@param handle_to_UILayoutGrid handle
 ---@param idx integer
 function UILGGetRowAbsYBottom(handle_to_UILayoutGrid, idx) end
