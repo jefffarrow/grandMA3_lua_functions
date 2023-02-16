@@ -28,19 +28,19 @@ function ErrPrintf(string) end
 
 ---@return result # command execution result (Ok, Syntax Error, Illegal Command...)
 ---@param cmd_to_execute string
-function Cmd(cmd_to_execute) end
+function Cmd(cmd_to_execute,...) end
 
 ---@return nothing
 ---@param cmd_to_execute string # cmd_to_execute [,undo [,target]]
 ---@param undo? handle
 ---@param target? handle
-function CmdIndirect(cmd_to_execute, undo, target) end
+function CmdIndirect(cmd_to_execute, undo, target,...) end
 
 ---@return nothing
 ---@param cmd_to_execute string # cmd_to_execute [,undo [,target]]
 ---@param undo? handle
 ---@param target? handle
-function CmdIndirectWait(cmd_to_execute, undo, target) end
+function CmdIndirectWait(cmd_to_execute, undo, target,...) end
 
 ---@return string:OsType
 function HostOS() end
@@ -750,15 +750,16 @@ function SetBlockInput(block) end
 function FindTexture(texture_name) end
 
 -- AS ARRAY
--- {title:string,[ backColor,][,timeout (ms)][,timeoutResultCancel][,timeoutResultID][ icon,][ titleTextColor,][ messageTextColor,] message[, display:(integer|lightuserdata)], commands:{array of {value, name}}, inputs:{array of {name, value, blackFilter, whiteFilter, vkPlugin, maxTextLength}}, states:{array of {name, state[,group]}, selectors:{array of {name, selectedValue, values:table[,type:integer 0-swipe, 1-radio]} }
+-- {title:string,[ backColor,][,timeout (ms)][,timeoutResultCancel][,timeoutResultID][ icon,][ titleTextColor,][ messageTextColor,] message[, display:(integer|lightuserdata)], commands:{array of {value, name}}, inputs:{array of {name, value, blackFilter, whiteFilter, vkPlugin, maxTextLength}}, states:{array of {name, state[,group]}, selectors:{array of {name, selectedValue, values:table[,type:integer 0-swipe, 1-radio]} }}}
 ---@return boolean # {success:boolean, result:integer, inputs:{array of [name:string] = value:string}, states:{array of [name:string] = state:boolean}, selectors:{array of [name:string] = selected-value:integer}}
----@param title string
----@param message string
----@param commands table
----@param inputs table
----@param states table
----@param selectors table
-function MessageBox(title, message, commands, inputs, states, selectors) end
+---@class messageBoxArray
+---@field title string
+---@field message? string
+---@field commands? table
+---@field inputs? table
+---@field states? table
+---@field selectors? table
+function MessageBox(messageBoxArray) end
 
 --- Object API ---
 
