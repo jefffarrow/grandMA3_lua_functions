@@ -668,19 +668,21 @@ function AddFixtures(handle_to_DMX_mode, amount, undo, parent, insert_index, idt
 function TextInput(title, value, x, y) end
 
 -- The PopupInput Lua function creates a popup input field in the UI, where the user can select an item out of a list of different variables.
+-- ({title:str,caller:handle,items:table:{{'str'|'int'|'lua'|'handle', name, type-dependent}...},selectedValue:str,x:int,y:int,target:handle,render_options:{left_icon,number,right_icon},useTopLeft:bool,properties:{prop:value}})
 ---@return string # value
----@param title string
----@param caller handle
----@param items table # {{'str'|'integer'|'lua'|'handle', name, type-dependent}...}
----@param selectedValue string
----@param x integer
----@param y integer
----@param target handle
----@param render_options table # {left_icon,number,right_icon}
----@param useTopLeft boolean
----@param properties table # {prop:value}
----@param add_args table # {FilterSupport='Yes'/'No'}
-function PopupInput(title, caller, items, selectedValue, x, y, target, render_options, useTopLeft, properties, add_args) end
+---@class popupInputArray
+---@field title string
+---@field caller handle
+---@field items table # {{'str'|'integer'|'lua'|'handle', name, type-dependent}...}
+---@field selectedValue string
+---@field x integer
+---@field y integer
+---@field target handle
+---@field render_options table # {left_icon,number,right_icon}
+---@field useTopLeft boolean
+---@field properties table # {prop:value}
+---@field add_args table # {FilterSupport='Yes'/'No'}
+function PopupInput(popupInputArray) end
 
 
 ---@return boolean # result
