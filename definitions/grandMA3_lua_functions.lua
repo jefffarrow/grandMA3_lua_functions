@@ -261,42 +261,23 @@ function GetTokenName(shortName) end
 ---@param token_index integer
 function GetTokenNameByIndex(token_index) end
 
----@class PhaserValueArray
----@field cfindex number
----@field preset number
----@field trans number
----@field width number
----@field accel number
----@field decel number
----@field rel number
----@field abs number
-
 ---@return nothing
 ---@param uichannelindex number
 ---@param step number
----@param PhaserValueArray PhaserValueArray # {[cfindex:<val>][preset:lud][trans:<val>][width:<val>][accel:<val>][decel:<val>][rel:<val>][abs:<val>]}
+---@param PhaserValueArray {}:{[cfindex][preset][trans][width][accel][decel][rel][abs]}
 function SetProgPhaserValue(uichannelindex, step, PhaserValueArray) end
-
----@class ProgPhaserArray
----@field fade number
----@field delay number
----@field speed number
----@field repeat number
----@field phase number
----@field preset number
----@field PhaserValueArray PhaserValueArray
 
 ---@return nothing
 ---@param uichannelindex handle
----@param ProgPhaserArray ProgPhaserArray # {[fade:<val>][delay:<val>][speed:<Hz>][repeat:<val>][phase:<val>][preset:lud]{[cfindex:<val>][preset:lud][trans:<val>][width:<val>][accel:<val>][decel:<val>][rel:<val>][abs:<val>]}}
+---@param ProgPhaserArray {}:{[fade][delay][speed][repeat][phase][preset]{[cfindex][preset][trans][width][accel][decel][rel][abs]}}
 function SetProgPhaser(uichannelindex, ProgPhaserArray) end
 
----@return table # {fade:<val>,delay:<val>,speed:<Hz>,repeat:<val>,phase:<val>,preset:lud,{cfindex:<val>,preset:lud,trans:<val>,width:<val>,accel:<val>,decel:<val>,rel:<val>,abs:<val>}*}
+---@return table # {fade,delay,speed,repeat,phase,preset,{cfindex,preset,trans,width,accel,decel,rel,abs}...}
 ---@param uichannelindex number
 ---@param phaser_only boolean
 function GetProgPhaser(uichannelindex, phaser_only) end
 
----@return table # {cfindex:<val>,preset:lud,trans:<val>,width:<val>,accel:<val>,decel:<val>,rel:<val>,abs:<val>}
+---@return table # {cfindex,preset,trans,width,accel,decel,rel,abs}
 ---@param uichannelindex number
 ---@param step number
 function GetProgPhaserValue(uichannelindex, step) end
@@ -542,7 +523,7 @@ function CheckFIDCollision(FID, count, type) end
 ---@param modePercent? boolean
 function GetDMXValue(address, universe, modePercent) end
 
----@return table # table of integer # dmx values
+---@return table # table of integer : dmx values
 ---@param universe integer # [,modePercent]
 ---@param modePercent? boolean
 function GetDMXUniverse(universe, modePercent) end
@@ -561,7 +542,7 @@ function GetButton(usb_device_object_handle) end
 function CreateUndo(undo_text) end
 
  
----@return boolean # true if was closed | false - if it's still in use
+---@return boolean # true if was closed | false if still in use
 ---@param handle_to_undo handle
 function CloseUndo(handle_to_undo) end
 
@@ -668,20 +649,8 @@ function AddFixtures(handle_to_DMX_mode, amount, undo, parent, insert_index, idt
 function TextInput(title, value, x, y) end
 
 -- The PopupInput Lua function creates a popup input field in the UI, where the user can select an item out of a list of different variables.
--- ({title:str,caller:handle,items:table:{{'str'|'int'|'lua'|'handle', name, type-dependent}...},selectedValue:str,x:int,y:int,target:handle,render_options:{left_icon,number,right_icon},useTopLeft:bool,properties:{prop:value}})
 ---@return string # value
----@class popupInputArray
----@field title string
----@field caller handle
----@field items table # {{'str'|'integer'|'lua'|'handle', name, type-dependent}...}
----@field selectedValue string
----@field x integer
----@field y integer
----@field target handle
----@field render_options table # {left_icon,number,right_icon}
----@field useTopLeft boolean
----@field properties table # {prop:value}
----@field add_args table # {FilterSupport='Yes'/'No'}
+---@param popupInputArray {}:({title:str, caller:handle, items:table:{{'str'|'int'|'lua'|'handle', name, type-dependent}...}, selectedValue:str, x:int, y:int, target:handle, render_options:{left_icon,number,right_icon}, useTopLeft:bool, properties:{prop:value}})
 function PopupInput(popupInputArray) end
 
 
@@ -751,16 +720,8 @@ function SetBlockInput(block) end
 ---@param texture_name string
 function FindTexture(texture_name) end
 
--- AS ARRAY
--- {title:string,[ backColor,][,timeout (ms)][,timeoutResultCancel][,timeoutResultID][ icon,][ titleTextColor,][ messageTextColor,] message[, display:(integer|lightuserdata)], commands:{array of {value, name}}, inputs:{array of {name, value, blackFilter, whiteFilter, vkPlugin, maxTextLength}}, states:{array of {name, state[,group]}, selectors:{array of {name, selectedValue, values:table[,type:integer 0-swipe, 1-radio]} }}}
 ---@return boolean # {success:boolean, result:integer, inputs:{array of [name:string] = value:string}, states:{array of [name:string] = state:boolean}, selectors:{array of [name:string] = selected-value:integer}}
----@class messageBoxArray
----@field title string
----@field message? string
----@field commands? table
----@field inputs? table
----@field states? table
----@field selectors? table
+---@param messageBoxArray {}:({title:string,[ backColor:string,][,timeout:number (ms)][,timeoutResultCancel:boolean][,timeoutResultID:number][ icon:string,][ titleTextColor:string,][ messageTextColor:string,] message:string[, display:(integer|lightuserdata)], commands:{array of {value:integer, name:string}}, inputs:{array of {name:string, value:string, blackFilter:string, whiteFilter:string, vkPlugin:string, maxTextLength:integer}}, states:{array of {name:string, state:boolean[,group:integer]}, selectors:{array of {name:string, selectedValue:integer, values:table[,type:integer 0-swipe, 1-radio]} }}})
 function MessageBox(messageBoxArray) end
 
 --- Object API ---
@@ -1112,16 +1073,15 @@ function AddListNumericItem(handle,name,value, appearance) end
 ---@param appearance? table # [,{[left={...}][right={...}]}:appearance]
 function AddListLuaItem(handle,name,value,callback, appearance) end
 
--- OR & NESTED
--- handle,handle:target object[,(string: explicit_name[,{[left={...}][right={...}]}:appearance] | enum{Roles}: role [,:boolean # extended_name[,{[left={...}][right={...}]}:appearance]])]
+---(handle,target object[,(string: explicit name[,{[left={...}][right={...}]}:appearance] | enum{Roles}: role [,:boolean: extended_name[,{[left={...}][right={...}]}:appearance]])])
+---@class target_object
+---@field explicit_name? string
+---@field role? number # enums
+---@field extended_name? boolean
 ---@return nothing
 ---@param handle handle
----@param target_object handle
----@param explicit_name? string
----@param role? number # enums
----@param extended_name? boolean
----@param appearance? table # [,{[left={...}][right={...}]}:appearance]
-function AddListObjectItem(handle,target_object, explicit_name, appearance, role, extended_name, appearance) end
+---@param target_object target_object
+function AddListObjectItem(handle,target_object) end
 
 ---@return nothing
 ---@param handle handle
