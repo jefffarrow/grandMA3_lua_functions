@@ -3,7 +3,6 @@
 ---@class LuaFileSystem
 local lfs = {}
 
-
 ---@alias nothing nothing # no feedback to MA system monitor
 ---@alias result result # MA system monitor restult (Ok, Syntax Error, Illegal Command...)
 ---@alias handle handle # MA UID
@@ -14,17 +13,16 @@ local lfs = {}
 --Object-Free API
 
 ---@return nothing
-function Echo(string) end
+function Echo(string,...) end
 
 ---@return nothing
-function ErrEcho(string) end
+function ErrEcho(string,...) end
 
 ---@return nothing
-function Printf(string) end
+function Printf(string,...) end
 
 ---@return nothing
-function ErrPrintf(string) end
-
+function ErrPrintf(string,...) end
 
 ---@return result # command execution result (Ok, Syntax Error, Illegal Command...)
 ---@param cmd_to_execute string
@@ -53,7 +51,6 @@ function HostSubType() end
 
 ---@return string:SerialNumber
 function SerialNumber() end
-
 
 ---@return pCertificate:OverallCertificate
 function OverallDeviceCertificate() end
@@ -194,14 +191,11 @@ function GetSubfixtureCount() end
 ---@param subfixture_index integer
 function GetSubfixture(subfixture_index) end
 
-
 ---@return integer # ui channel count
 function GetUIChannelCount() end
 
-
 ---@return integer # rt channel count
 function GetRTChannelCount() end
-
 
 ---@return integer # attribute count
 function GetAttributeCount() end
@@ -228,17 +222,14 @@ function GetRTChannel(channel_RT_index) end
 ---@param UI_channel_index integer
 function GetAttributeByUIChannel(UI_channel_index) end
 
-
 ---@return integer # attribute index
 ---@param attribute_name string
 function GetAttributeIndex(attribute_name) end
-
 
 ---@return integer # ui channel index
 ---@param subfixture_index integer
 ---@param attribute_index integer
 function GetUIChannelIndex(subfixture_index, attribute_index) end
-
 
 ---@return integer # channel
 ---@param ui_channel_index integer
@@ -363,6 +354,10 @@ function ExportCSV(filename, export_data) end
 ---@param target? handle
 function HookObjectChange(callback, handle, plugin_handle, target) end
 
+---@return true|nil
+---@param object handle # (light_userdata:object[, int:change level threshold])
+function PrepareWaitObjectChange(object) end
+
 ---@return nothing
 ---@param callback function
 function Unhook(callback) end
@@ -473,18 +468,14 @@ function Mouse(displayIndex, type) end
 ---@param absY integer
 function Touch(displayIndex, type, touchId, absX, absY) end
 
-
 ---@return number # time
 function Time() end
-
 
 ---@return handle # mouse object handle
 function MouseObj() end
 
-
 ---@return handle # touch object handle
 function TouchObj() end
-
 
 ---@return handle # keyboard object handle
 function KeyboardObj() end
@@ -516,7 +507,6 @@ function CheckDMXCollision(dmx_mode, dmx_address, count, breakIndex) end
 ---@param type? integer
 function CheckFIDCollision(FID, count, type) end
 
-
 ---@return integer # dmx value
 ---@param address integer # [,universe,modePercent]
 ---@param universe? integer
@@ -541,12 +531,10 @@ function GetButton(usb_device_object_handle) end
 ---@param undo_text handle
 function CreateUndo(undo_text) end
 
- 
 ---@return boolean # true if was closed | false if still in use
 ---@param handle_to_undo handle
 function CloseUndo(handle_to_undo) end
 
- 
 ---@return boolean # true if desk is locked
 function DeskLocked() end
 
@@ -572,7 +560,6 @@ function SelectionNotifyEnd(associated_context) end
 ---@param undo_text? string
 function CreateMultiPatch(array_of_fixture_handles, count, undo_text) end
 
- 
 ---@return handle # global variables
 function GlobalVars() end
 
@@ -583,11 +570,9 @@ function UserVars() end
 ---@param plugin_name string
 function PluginVars(plugin_name) end
 
- 
 ---@return handle # addon variables
 ---@param addon_name string
 function AddonVars(addon_name) end
-
 
 ---@return boolean # success
 ---@param variables handle
@@ -640,6 +625,19 @@ function GetSample(type) end
 ---@param patch? table # {array 1..8: string address}
 function AddFixtures(handle_to_DMX_mode, amount, undo, parent, insert_index, idtype, cid, fid, name, layer, class, patch) end
 
+---@return boolean # result
+---@param class_name string
+function ClassExists(class_name) end
+
+---@return boolean # result
+---@param derived_name string
+---@param base_name string
+function IsClassDerivedFrom (derived_name, base_name) end
+
+---@return integer|nil # result or nil
+---@param class_name string
+function GetClassDerivationLevel (class_name) end
+
 -- The TextInput Lua function opens a text input pop-up and returns the typed input as a string. It is part of the user interface functions.
 ---@return string # The returned user input.
 ---@param title? string # [title [, value [, # x [, # y]]]]
@@ -652,7 +650,6 @@ function TextInput(title, value, x, y) end
 ---@return string # value
 ---@param popupInputArray {}:({title:str, caller:handle, items:table:{{'str'|'int'|'lua'|'handle', name, type-dependent}...}, selectedValue:str, x:int, y:int, target:handle, render_options:{left_icon,number,right_icon}, useTopLeft:bool, properties:{prop:value}})
 function PopupInput(popupInputArray) end
-
 
 ---@return boolean # result
 ---@param title string # [title [,message [,# displayIndex [,showCancel]]]]
@@ -673,6 +670,11 @@ function GetRemoteVideoInfo() end
 ---@param display_index integer
 ---@param position table # {x,y}:position
 function GetUIObjectAtPosition(display_index, position) end
+
+---@return nothing
+---@param display_index integer
+---@param position table # {x,y}:position[, number:duration]
+function DrawPointer(display_index, position) end
 
 ---@return true|nil # true on success, nil on timeout
 ---@param handle_to_UIObject handle
@@ -790,7 +792,6 @@ function Children(handle) end
 ---@return handle # current child or nil
 function CurrentChild(handle) end
 
-
 ---@return handle # child_handle
 ---@param handle handle
 ---@param child_index number # (1-based) [,class [,undo[,count]]]
@@ -848,9 +849,12 @@ function HasParent(dst_handle, src_handle, undo) end
 ---@param change string # change level enum name
 function Changed(handle, change) end
 
-
 ---@return boolean # returns true if objects is considered 'empty'
 function IsEmpty(handle) end
+
+---@return nothing
+---@param handle handle
+function PrepareAccess(handle) end
 
 ---@return nothing
 ---@param property_name string
@@ -871,10 +875,8 @@ function SetChildren(handle_of_parent, property_name, property_value, recursive)
 ---@param roles? table # [,enum{Roles}:role]
 function Get(handle, property_name, roles) end
 
-
 ---@return number # property_count
 function PropertyCount(handle) end
-
 
 ---@return string # property_name
 ---@param handle handle
@@ -885,6 +887,11 @@ function PropertyName(handle, property_index) end
 ---@param handle handle
 ---@param property_index number
 function PropertyType(handle, property_index) end
+
+---@return table # {string:ReadOnly, string:ImportIgnore, string:ExportIgnore}
+---@param handle handle
+---@param property_index number
+function PropertyInfo(handle, property_index) end
 
 ---@return boolean:result
 function IsValid(handle) end
@@ -918,7 +925,6 @@ function GetUISettings(handle) end
 ---@param search_class_name string
 function FindParent(search_start_handle, search_class_name) end
 
-
 ---@return handle:found_handle
 ---@param search_start_handle handle
 ---@param search_name string
@@ -948,12 +954,10 @@ function Import(handle, file_path, file_name) end
 ---@param file_name string
 function Export(handle, file_path, file_name) end
 
-
 ---@return string:filename
 ---@param handle handle
 ---@param camel_case_to_file_name? boolean
 function GetExportFileName(handle, camel_case_to_file_name) end
-
 
 ---@return boolean # success
 ---@param handle handle
@@ -1002,6 +1006,18 @@ function GetFaderText(handle, fader) end
 
 ---@return boolean:result
 function HasActivePlayback(handle) end
+
+---@return boolean:result
+function HasReferences(handle) end
+
+---@return boolean:result
+function HasDependencies(handle) end
+
+---@return table:handle
+function GetReferences(handle) end
+
+---@return table:handle
+function GetDependencies(handle) end
 
 ---@return nothing
 ---@param handle handle
@@ -1166,7 +1182,6 @@ function IsListItemEmpty(handle,index) end
 ---@param empty? boolean # (default:true)
 function SetEmptyListItem(handle,index, empty) end
 
-
 ---@return string # value
 ---@param handle handle
 ---@param index integer
@@ -1177,7 +1192,6 @@ function GetListItemValueStr(handle,index) end
 ---@param index integer
 ---@param value string
 function SetListItemValueStr(handle,index,value) end
-
 
 ---@return integer # value
 ---@param handle handle
@@ -1205,20 +1219,16 @@ function GetListItemAppearance(handle,index) end
 ---@param index integer
 function SetListItemAppearance(handle,index) end
 
-
 ---@return handle|nil # button or nil if not visible
 ---@param handle handle
 ---@param index integer
 function GetListItemButton(handle,index) end
 
-
 ---@return integer # 1-based index
 function GetListSelectedItemIndex(handle) end
 
-
 ---@return integer # amount of items in the list
 function GetListItemsCount(handle) end
-
 
 ---@return integer # 1-based index
 ---@param handle handle
@@ -1303,10 +1313,8 @@ function GridsGetExpandHeaderCell(handle_to_UIGrid) end
 ---@param cell table
 function GridsGetLevelButtonWidth(handle_to_UIGrid, cell) end
 
-
 ---@return handle # overlay_handle
 function GetOverlay(handle_to_UIObject) end
-
 
 ---@return handle # display_handle
 function GetDisplay(handle_to_UIObject) end
@@ -1350,7 +1358,6 @@ function WaitChildren(handle_to_UIObject, expected_amount_of_children, seconds_t
 ---@param callback_to_invoke_on_deletion function
 ---@param args? any
 function HookDelete(handle_to_UIObject, callback_to_invoke_on_deletion, args) end
-
 
 ---@return boolean # is visible
 function IsVisible(handle_to_UIObject) end
@@ -1405,6 +1412,11 @@ function ScrollGetItemOffset(handle,scroll_type,item_idx) end
 ---@param scroll_type integer # scroll_type (see 'ScrollType' enum)
 ---@param offset integer # 1-based item_idx
 function ScrollGetItemByOffset(handle,scroll_type,offset) end
+
+---@return nothing
+---@param handle handle #handle to UIObject
+---@param topicName string
+function SetContextSensHelpLink(handle, topicName) end
 
 ---@return integer # size
 ---@param handle_to_UILayoutGrid handle
