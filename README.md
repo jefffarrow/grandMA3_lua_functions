@@ -13,4 +13,4 @@ This project is not official or affilated with MA Lighting International GmbH.
 
 Contributions / Corrections / Collaboration all welcomed.
 
-Create a [GitHub Issue](https://github.com/jefffarrow/grandMA3_lua_functions/issues/new/choose) if you have an something to share.
+Create a [GitHub Issue](https://github.com/jefffarrow/grandMA3_lua_functions/issues/new/choose) if you have something to share.
