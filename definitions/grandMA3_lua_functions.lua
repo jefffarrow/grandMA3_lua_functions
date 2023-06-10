@@ -211,8 +211,9 @@ function GetUIChannels(subfixture_index, handles) end
 function GetRTChannels(fixture_index, handles) end
 
 ---@return table|nil # {ChannelUI descriptor} or nil
----@param channel_UI_index integer
-function GetUIChannel(channel_UI_index) end
+---@param ref_to_subfixture integer|handle
+---@param attribute_name integer|string
+function GetUIChannel(ref_to_subfixture, attribute_name) end
 
 ---@return table|nil # {ChannelRT descriptor} or nil
 ---@param channel_RT_index integer
@@ -253,22 +254,22 @@ function GetTokenName(shortName) end
 function GetTokenNameByIndex(token_index) end
 
 ---@return nothing
----@param uichannelindex number
----@param step number
----@param PhaserValueArray {}:{[cfindex][preset][trans][width][accel][decel][rel][abs]}
-function SetProgPhaserValue(uichannelindex, step, PhaserValueArray) end
-
----@return nothing
 ---@param uichannelindex handle
----@param ProgPhaserArray {}:{[fade][delay][speed][repeat][phase][preset]{[cfindex][preset][trans][width][accel][decel][rel][abs]}}
+---@param ProgPhaserArray {}:{[abs_preset][rel_preset][fade][delay][speed][phase][measure][gridpos]   {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}...}
 function SetProgPhaser(uichannelindex, ProgPhaserArray) end
 
----@return table # {fade,delay,speed,repeat,phase,preset,{cfindex,preset,trans,width,accel,decel,rel,abs}...}
+---@return nothing
+---@param uichannelindex number
+---@param step number
+---@param PhaserValueArray {}:{[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}
+function SetProgPhaserValue(uichannelindex, step, PhaserValueArray) end
+
+---@return table # {[abs_preset][rel_preset][fade][delay][speed][phase][measure][gridpos][mask_active_phaser][mask_active_value][mask_individual]   {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}...}
 ---@param uichannelindex number
 ---@param phaser_only boolean
 function GetProgPhaser(uichannelindex, phaser_only) end
 
----@return table # {cfindex,preset,trans,width,accel,decel,rel,abs}
+---@return table # {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}
 ---@param uichannelindex number
 ---@param step number
 function GetProgPhaserValue(uichannelindex, step) end
