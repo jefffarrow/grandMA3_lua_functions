@@ -1,3 +1,4 @@
+--MA3 release v 1.9.7
 ---@meta
 
 ---@class LuaFileSystem
