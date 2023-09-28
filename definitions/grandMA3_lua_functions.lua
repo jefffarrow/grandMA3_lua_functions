@@ -5,7 +5,7 @@ local lfs = {}
 
 ---@alias nothing nothing # no feedback to MA system monitor
 ---@alias result result # MA system monitor restult (Ok, Syntax Error, Illegal Command...)
----@alias handle handle # MA UID
+---@alias handle lightuserdata # MA UID
 ---@alias double double # 64-bit floating-point number (C)
 ---@alias pCertificate pCertificate # OverallDeviceCertificate
 ---@alias LuaInteger LuaInteger # The integer that correlates to an object's handle
@@ -32,7 +32,7 @@ function Cmd(cmd_to_execute,...) end
 ---@param cmd_to_execute string # cmd_to_execute [,undo [,target]]
 ---@param undo? handle
 ---@param target? handle
-function CmdIndirect(cmd_to_execute, undo, target,...) end
+function Cmd(cmd_to_execute, undo, target,...) end
 
 ---@return nothing
 ---@param cmd_to_execute string # cmd_to_execute [,undo [,target]]
@@ -211,12 +211,11 @@ function GetUIChannels(subfixture_index, handles) end
 function GetRTChannels(fixture_index, handles) end
 
 ---@return table|nil # {ChannelUI descriptor} or nil
----@param ref_to_subfixture integer|handle
----@param attribute_name integer|string
-function GetUIChannel(ref_to_subfixture, attribute_name) end
+---@param channel_UI_index handle|integer|string handle: ref to Subfixture or integer: attribute index or string: attribute name
+function GetUIChannel(channel_UI_index) end
 
 ---@return table|nil # {ChannelRT descriptor} or nil
----@param channel_RT_index integer
+---@param channel_RT_index integer 
 function GetRTChannel(channel_RT_index) end
 
 ---@return handle|nil # reference to attribute or nil
@@ -255,16 +254,16 @@ function GetTokenNameByIndex(token_index) end
 
 ---@return nothing
 ---@param uichannelindex handle
----@param ProgPhaserArray {}:{[abs_preset][rel_preset][fade][delay][speed][phase][measure][gridpos]   {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}...}
+---@param ProgPhaserArray {}:{[abs_preset][rel_preset][fade][delay][speed][phase][measure][gridpos]  {[function:<val>] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}*}
 function SetProgPhaser(uichannelindex, ProgPhaserArray) end
 
 ---@return nothing
 ---@param uichannelindex number
 ---@param step number
----@param PhaserValueArray {}:{[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}
+---@param PhaserValueArray function {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type>] [trans][width] [integrated]})
 function SetProgPhaserValue(uichannelindex, step, PhaserValueArray) end
 
----@return table # {[abs_preset][rel_preset][fade][delay][speed][phase][measure][gridpos][mask_active_phaser][mask_active_value][mask_individual]   {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}...}
+---@return table # {[abs_preset][rel_preset][fade][delay][speed][phase][measure][gridpos][mask_active_phaser][mask_active_value][mask_individual] {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}*}
 ---@param uichannelindex number
 ---@param phaser_only boolean
 function GetProgPhaser(uichannelindex, phaser_only) end
