@@ -1,5 +1,8 @@
 --MA3 Software version: 2.1.1.2
 
+--updated 24-12-03
+--Cmd and its variants now allow multiple arguments
+
 ---@meta
 
 ---@class LuaFileSystem
@@ -8,7 +11,6 @@ local lfs = {}
 ---@alias enum enum #
 ---@alias value value #
 ---@alias nothing nothing # no feedback to MA system monitor
----@alias formatted_command string # formatted MA3 command string
 ---@alias result result # MA system monitor restult (Ok, Syntax Error, Illegal Command...)
 ---@alias light_userdata lightuserdata # MA UID
 ---@alias handle lightuserdata # MA UID
@@ -20,37 +22,32 @@ local lfs = {}
 --Object-Free API
 
 ---@return nothing
----@param formatted_command string # string:formatted_command ...
-function Echo(formatted_command) end
+---@param ... string # string:formatted_command ...
+function Echo(...) end
 
 ---@return nothing
----@param formatted_command string # string:formatted_command ...
-function ErrEcho(formatted_command) end
+---@param ... string # string:formatted_command ...
+function ErrEcho(...) end
 
 ---@return nothing
----@param formatted_command string # string:formatted_command ...
-function Printf(formatted_command) end
+---@param ... string # string:formatted_command ...
+function Printf(...) end
 
 ---@return nothing
----@param formatted_command string # string:formatted_command ...
-function ErrPrintf(formatted_command) end
+---@param ... string # string:formatted_command ...
+function ErrPrintf(...) end
 
 ---@return string # command_execution_result ('Ok', 'Syntax Error', 'Illegal Command', ...)
----@param formatted_command? string # string:formatted_command[ ,light_userdata:undo], ...
----@param undo? handle
-function Cmd(formatted_command, undo) end
+---@param ... string # string:formatted_command[ ,light_userdata:undo], ...
+function Cmd(...) end
 
 ---@return nothing
----@param command? string # string:command[, light_userdata:undo[, light_userdata:target]]
----@param undo? handle
----@param target? handle
-function CmdIndirect(command, undo, target) end
+---@param ... string # string:command[, light_userdata:undo[, light_userdata:target]]
+function CmdIndirect(...) end
 
 ---@return nothing
----@param command? string # string:command[, light_userdata:undo[, light_userdata:target]]
----@param undo? handle
----@param target? handle
-function CmdIndirectWait(command, undo, target) end
+---@param ... string # string:command[, light_userdata:undo[, light_userdata:target]]
+function CmdIndirectWait(...) end
 
 ---@return string # ostype
 function HostOS() end
@@ -296,13 +293,13 @@ function GetTokenNameByIndex(token_index) end
 
 ---@return nothing
 ---@param uichannelindex handle
----@param ProgPhaserArray Table # {[abs_preset][rel_preset][fade][delay][speed][phase][measure][gridpos]  {[function:<val>] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}*}
+---@param ProgPhaserArray {}:{[abs_preset][rel_preset][fade][delay][speed][phase][measure][gridpos]  {[function:<val>] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}*}
 function SetProgPhaser(uichannelindex, ProgPhaserArray) end
 
 ---@return nothing
 ---@param uichannelindex number
 ---@param step number
----@param PhaserValueArray table # {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type>] [trans][width] [integrated]})
+---@param PhaserValueArray function {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type>] [trans][width] [integrated]})
 function SetProgPhaserValue(uichannelindex, step, PhaserValueArray) end
 
 ---@return table # {[abs_preset][rel_preset][fade][delay][speed][phase][measure][gridpos][mask_active_phaser][mask_active_value][mask_individual] {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}*}
@@ -993,17 +990,17 @@ function Set(handle, property_name, property_value, override_change_level) end
 ---@param handle_of_parent handle # light_userdata:handle_of_parent, string:property_name, string:property_value[, boolean:recursive (default: false)]
 ---@param property_name string
 ---@param property_value? string
----@param recursive_? boolean
-function SetChildren(handle_of_parent, property_name, property_value, recursive_) end
+---@param recursive? boolean
+function SetChildren(handle_of_parent, property_name, property_value, recursive) end
 
 ---@return nothing
 ---@param handle_of_parent handle # light_userdata:handle_of_parent, string:property_name, string:property_value[, boolean:recursive (default: false)]
 ---@param property_name string
 ---@param property_value? string
----@param recursive_? boolean
-function SetChildrenRecursive(handle_of_parent, property_name, property_value, recursive_) end
+---@param recursive? boolean
+function SetChildrenRecursive(handle_of_parent, property_name, property_value, recursive) end
 
----@return handle # child or string # property (if 'role' provided - always string)
+---@return handle|string # child or string # property (if 'role' provided - always string)
 ---@param handle handle # light_userdata:handle, string:property_name[, integer:role(Enums.Roles)]
 ---@param property_name? string
 ---@param role? integer
@@ -1527,7 +1524,7 @@ function GetUIChildrenCount(handle_to_UIObject) end
 ---@param handle_to_UIObject handle # light_userdata:handle to UIObject
 function ClearUIChildren(handle_to_UIObject) end
 
----@return handle to UIObject
+---@return handle # to UIObject
 ---@param handle_to_UIObject handle # light_userdata:handle to UIObject, integer:index(1-based)
 ---@param index integer
 function GetUIChild(handle_to_UIObject, index) end
