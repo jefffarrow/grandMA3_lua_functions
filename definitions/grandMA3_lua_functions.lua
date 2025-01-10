@@ -642,7 +642,7 @@ function AddonVars(addon_name) end
 ---@return boolean # success
 ---@param variables handle # light_userdata:variables, string:varname, value
 ---@param varname string
----@param value string
+---@param value string|integer|float
 function SetVar(variables, varname, value) end
 
 ---@return value
