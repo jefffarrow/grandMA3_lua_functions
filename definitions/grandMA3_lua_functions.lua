@@ -306,13 +306,13 @@ function GetTokenNameByIndex(token_index) end
 
 ---@return nothing
 ---@param uichannelindex handle
----@param ProgPhaserArray {}:{[abs_preset][rel_preset][fade][delay][speed][phase][measure][gridpos]  {[function:<val>] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}*}
+---@param ProgPhaserArray {} # {[abs_preset][rel_preset][fade][delay][speed][phase][measure][gridpos]  {[function:<val>] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}*}
 function SetProgPhaser(uichannelindex, ProgPhaserArray) end
 
 ---@return nothing
 ---@param uichannelindex number
 ---@param step number
----@param PhaserValueArray function {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type>] [trans][width] [integrated]})
+---@param PhaserValueArray function # {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type>] [trans][width] [integrated]})
 function SetProgPhaserValue(uichannelindex, step, PhaserValueArray) end
 
 ---@return table # {[abs_preset][rel_preset][fade][delay][speed][phase][measure][gridpos][mask_active_phaser][mask_active_value][mask_individual] {[function] [absolute][absolute_value][relative] [accel][accel_type][decel][decel_type] [trans][width] [integrated]}*}
