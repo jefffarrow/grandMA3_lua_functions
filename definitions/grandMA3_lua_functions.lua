@@ -1,7 +1,6 @@
---MA3 Software version: 2.1.1.2
+--MA3 Software version: 2.2.1.1
 
---updated 24-12-03
---Cmd and its variants now allow multiple arguments
+--updated 2025-10-16
 
 ---@meta
 
@@ -68,6 +67,20 @@ function OverallDeviceCertificate() end
 ---@param ip string # string:ip, string:command
 ---@param command string
 function RemoteCommand(ip, command) end
+
+---@return boolean # success
+---@param queue_name string
+function endOpenMessageQueue(queue_name) end
+
+---@return boolean # success
+---@param queue_name string
+function CloseMessageQueue(queue_name) end
+
+---@return boolean # success
+---@param station string
+---@param channel_name string
+---@param data table
+function SendLuaMessage(station, channel_name, data) end
 
 ---@return string # releasetype
 function ReleaseType() end
@@ -355,7 +368,8 @@ function FromAddr(address, base_handle) end
 ---@return string # address
 ---@param handle handle # light_userdata:handle, boolean:with_name
 ---@param with_name boolean
-function ToAddr(handle, with_name) end
+---@param use_visible_addr? boolean
+function ToAddr(handle, with_name, use_visible_addr) end
 
 ---@return handle
 ---@param handle integer # integer:handle
@@ -443,6 +457,11 @@ function GetPathSeparator() end
 ---@return boolean # result
 ---@param path string # string:path
 function FileExists(path) end
+
+---@return boolean #result
+---@param source_path string
+---@param destination_path string
+function CopyFile(source_path, destination_path) end
 
 ---@return boolean # result
 ---@param path string # string:path
@@ -663,11 +682,22 @@ function TestPlaybackOutput(expectations) end
 ---@param expectations table # table:expectations
 function TestPlaybackOutputSteps(expectations) end
 
+---@return table | boolean, result #table with results | boolean:false, string:result text 
+---@param sampling_points table
+function SampleOutput(sampling_points) end
+
 ---@return table # table of {string:function_name, string:arguments, string:return_values}
 function GetApiDescriptor() end
 
 ---@return table # table of {string:function_name, string:arguments, string:return_values}
 function GetObjApiDescriptor() end
+
+---@return integer # internal_line_number
+function GetTextScreenLine(nothing) end
+
+---@return integer # internal_line_count
+---@param starting_internal_line_number integer
+function GetTextScreenLineCount(starting_internal_line_number) end
 
 ---@return float # fps
 function GetDebugFPS() end
@@ -740,12 +770,12 @@ function GetRemoteVideoInfo() end
 
 ---@return handle|nil # handle to UI object or nil
 ---@param display_index integer
----@param position table # {x,y}:position
+---@param position table # {x=integer:x_position,y=integer:y_position}
 function GetUIObjectAtPosition(display_index, position) end
 
 ---@return nothing
 ---@param display_index integer
----@param position table # {x,y}:position[, number:duration]
+---@param position table #  {x=integer:x_position,y=integer:y_position}, integer:duration in ms)
 function DrawPointer(display_index, position) end
 
 ---@return boolean # true on success, nil on timeout
@@ -844,7 +874,8 @@ function FSExtendedModeHasDots(handle_to_UIGrid) end
 ---@return string # address
 ---@param handle handle # light_userdata:handle,boolean:with_name
 ---@param with_name boolean
-function ToAddr(handle, with_name) end
+---@param use_visible_addr? boolean
+function ToAddr(handle, with_name, use_visible_addr) end
 
 ---@return string # information
 ---@param handle handle # light_userdata:handle
@@ -929,6 +960,13 @@ function Append(handle, class, undo, count) end
 ---@param handle handle # light_userdata:handle[, string:class[, light_userdata:undo]]
 ---@param class? string
 ---@param undo? handle
+function Acquire(handle, class, undo) end
+
+---@deprecated # use : Acquire
+---@return handle # child_handle
+---@param handle handle # light_userdata:handle[, string:class[, light_userdata:undo]]
+---@param class? string
+---@param undo? handle
 function Aquire(handle, class, undo) end
 
 ---@return nothing
@@ -1002,7 +1040,7 @@ function SetChildrenRecursive(handle_of_parent, property_name, property_value, r
 
 ---@return handle|string # child or string # property (if 'role' provided - always string)
 ---@param handle handle # light_userdata:handle, string:property_name[, integer:role(Enums.Roles)]
----@param property_name? string
+---@param property_name string
 ---@param role? integer
 function Get(handle, property_name, role) end
 
@@ -1020,7 +1058,7 @@ function PropertyName(handle, property_index) end
 ---@param property_index integer
 function PropertyType(handle, property_index) end
 
----@return table # {string:read_only, string:import_ignore, string:export_ignore}
+---@return table #  {'ReadOnly'=boolean:read_only_flag, 'ExportIgnore'=boolean:export_ignore_flag, 'ImportIgnore'=boolean:import_ignore_flag, 'EnumCollection'=string:enum_collection_name}
 ---@param handle handle # light_userdata:handle, integer:property_index
 ---@param property_index integer
 function PropertyInfo(handle, property_index) end
@@ -1250,10 +1288,11 @@ function AddListNumericItem(handle, name, value, base_handle, appearance) end
 function AddListLuaItem(handle, name, value_or_function_name, callback_reference, argument_to_pass_to_callback) end
 
 ---@return nothing
----@param handle handle # light_userdata:handle, light_userdata:target object[, (string: explicit name[, {[left={...}][right={...}]}:appearance] | enum{Roles}: role [, :boolean: extended_name[, {[left={...}][right={...}]}:appearance]])]
+---@param handle handle # (light_userdata:handle, light_userdata:target object[, (string: explicit name[, {[boolean:appearance],[left={...}][right={...}]}:appearance] | enum{Roles}: role [, :boolean: extended_name[, {[left={...}][right={...}]}:appearance]])])
 ---@param target_object handle
----@param explicit_name? string|enum
-function AddListObjectItem(handle, target_object, explicit_name) end
+---@param explicit_name? string
+---@param appearance? table
+function AddListObjectItem(handle, target_object, explicit_name, appearance) end
 
 ---@return nothing
 ---@param handle handle # light_userdata:handle, table{item={[1]=name, [2]=value}, ...}
@@ -1529,7 +1568,7 @@ function ClearUIChildren(handle_to_UIObject) end
 ---@param index integer
 function GetUIChild(handle_to_UIObject, index) end
 
----@return table # array of references to children of passed UIObject
+---@return table # {light_userdata:child_handles}
 ---@param handle_to_UIObject handle # light_userdata:handle to UIObject
 function UIChildren(handle_to_UIObject) end
 
@@ -1652,3 +1691,4 @@ function OverlaySetCloseCallback(handle_to_Overlay, callbackName, ctx) end
 ---@param handle_to_UIGrid handle # light_userdata:handle to UIGrid (or derived), {r, c}:cell
 ---@param cell table
 function FSExtendedModeHasDots(handle_to_UIGrid, cell) end
+
