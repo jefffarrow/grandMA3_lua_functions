@@ -1,6 +1,8 @@
 # grandMA3_lua_functions
 A library of grandMA3 specific Lua functions, formatted for use with Visual Studio Code & the [LuaLS language server](https://luals.github.io/) by [sumneko](https://marketplace.visualstudio.com/publishers/sumneko).
 
+If your intention is to code gma3 lua in VS code then I recomend using https://github.com/JeremyDufeux/ma3-lua-api-for-vscode
+
 ## USAGE
 Place `grandMA3_lua_functions.lua` in your Visual Studio Code workspace, in a directory named `definition`.
 
